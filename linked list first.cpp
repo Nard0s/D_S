@@ -8,6 +8,7 @@ struct Student {
     char name[30];
     Student* next;
 } *start = NULL;
+	Student*last=NULL;
 
 // Function prototypes
 void insert_big();
@@ -80,6 +81,7 @@ void insert_big() {
 
 // Insert at the end
 void insert_end() {
+
     Student* temp = new Student;
     cout << "Please enter student ID: ";
     cin >> temp->ID;
@@ -89,13 +91,11 @@ void insert_end() {
     temp->next = NULL;
 
     if (start == NULL) {
-        start = temp;
+        last=start = temp;
     } else {
-        Student* ptr = start;
-        while (ptr->next != NULL) {
-            ptr = ptr->next;
-        }
-        ptr->next = temp;
+    	last->next=temp;
+    	last=temp;
+        
     }
 }
 
@@ -120,7 +120,7 @@ void del_end() {
     } else if (start->next == NULL) {
         cout << "Deleted student with ID: " << start->ID << "\n";
         delete start;
-        start = NULL;
+        start =last= NULL;
     } else {
         Student* ptr = start;
         while (ptr->next->next != NULL) {
@@ -129,6 +129,7 @@ void del_end() {
         cout << "Deleted student with ID: " << ptr->next->ID << "\n";
         delete ptr->next;
         ptr->next = NULL;
+        last = ptr;
     }
     cin.ignore();
     cin.get();
